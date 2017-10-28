@@ -17,7 +17,7 @@ namespace HelloRasp
 
         public ApiClient()
         {
-            _client.BaseAddress = new Uri("http://dataservice.accuweather.com");
+            //_client.BaseAddress = new Uri(baseUri);
         }
 
 
@@ -35,9 +35,13 @@ namespace HelloRasp
         /// </summary>
         /// <param name="requestUri"></param>
         /// <returns>System.IO.Stream</returns>
-        public async Task<HttpResponseMessage> GetAsync(string requestUri)
+        public async Task<HttpResponseMessage> GetAsync(string baseUri, string requestUri, bool addApiKey = true)
         {
-            var response = await _client.GetAsync($"{requestUri}&apikey={ApiKey}").ConfigureAwait(false);
+            string uri = $"{baseUri}{requestUri}";
+
+            if (addApiKey) uri += $"apikey={ApiKey}";
+
+            var response = await _client.GetAsync(uri).ConfigureAwait(false);
 
             return response;
         }

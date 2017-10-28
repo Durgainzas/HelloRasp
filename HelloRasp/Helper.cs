@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HelloRasp.Models;
-using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace HelloRasp
 {
     public static class Helper
     {
         public const string IP = "78.45.147.145";
+        public const string BaseUriAccuWeather = "http://dataservice.accuweather.com";
+        public const string BaseUriIpInfo = "http://ipinfo.io";
 
         /// <summary>
         /// Get localKey string from server
@@ -19,35 +21,39 @@ namespace HelloRasp
         /// <returns></returns>
         public static async Task<string> GetLocalKey(ApiClient client)
         {
-            DataContractSerializer serializer = new DataContractSerializer(typeof(Location));
-
-            var response = await client.GetAsync(GetLocationByIP(IP));
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(IP));
             if (response.IsSuccessStatusCode == false)
             {
                 return response.ReasonPhrase;
             }
 
-            var responseStream = await response.Content.ReadAsStreamAsync();
+            var responseString = await response.Content.ReadAsStringAsync();
 
-            var deserializedResponse = (Location)serializer.ReadObject(responseStream);
+            var deserializedResponse = JsonConvert.DeserializeObject<Location>(responseString);
 
 
             return deserializedResponse.Key;
         }
-        
-        //public async Task<string> GetActualWeather()
+
+        //public static async Task<string> GetIpInfo(ApiClient client)
         //{
+        //    var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo());
 
         //}
         
+
+        
         #region endpoints
 
-        public static string GetLocationByIP(string ip) 
-            => $"/locations/v1/cities/ipaddress?q={ip}";
+        public static string EndpointGetLocationByIP(string ip) 
+            => $"/locations/v1/cities/ipaddress?q={ip}&";
 
-        public static string GetWeatherFromLocationKey(string locationKey)
-            => $"/currentconditions/v1/{locationKey}";
-        
+        public static string EndpointGetWeatherFromLocationKey(string locationKey)
+            => $"/currentconditions/v1/{locationKey}?";
+
+        public static string EndpointGetIpInfo()
+            => "/?callback=callback";
+
         #endregion
 
     }
