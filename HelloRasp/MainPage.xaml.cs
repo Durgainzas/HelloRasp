@@ -24,16 +24,15 @@ namespace HelloRasp
     {
         ApiClient client = new ApiClient();
 
-
         public MainPage()
         {
             this.InitializeComponent();
-            
         }
 
-        private void Refresh_Click(object sender, RoutedEventArgs e)
+        private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
-            var response = client.Get("http://dataservice.accuweather.com/currentconditions/v1/125594");
+
+            Textblock1.Text = await Helper.GetLocalKey(client);
         }
     }
 }

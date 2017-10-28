@@ -33,9 +33,8 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal"
             HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Foreground="White" FontSize="50" Text="High: 66°" Margin="0,0,20,0"/>
-            <TextBlock Foreground="White" FontSize="50" Text="Low: 43°" Margin="0,0,20,0"/>
-            <TextBlock Foreground="White" FontSize="50" Text="Feels like: 63°"/>
+            <TextBlock Name="Textblock1" Foreground="White" FontSize="50" Text="High: 66°" Margin="0,0,20,0"/>
+            
         </StackPanel>
     </Grid>
     
