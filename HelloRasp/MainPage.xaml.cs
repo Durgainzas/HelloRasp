@@ -22,14 +22,18 @@ namespace HelloRasp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        ApiClient client = new ApiClient();
+
+
         public MainPage()
         {
             this.InitializeComponent();
+            
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
-
+            var response = client.Get("http://dataservice.accuweather.com/currentconditions/v1/125594");
         }
     }
 }
