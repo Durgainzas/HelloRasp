@@ -12,7 +12,7 @@ namespace HelloRasp
     {
         public const string IP = "78.45.147.145";
         public const string BaseUriAccuWeather = "http://dataservice.accuweather.com";
-        public const string BaseUriIpInfo = "http://ipinfo.io";
+        public const string BaseUriIpInfo = "http://ip-api.com/";
 
         /// <summary>
         /// Get localKey string from server
@@ -36,7 +36,7 @@ namespace HelloRasp
 
         public static async Task<string> GetIpInfo(ApiClient client)
         {
-            var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo());
+            var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo(), false);
             if (response.IsSuccessStatusCode == false)
             {
                 return response.ReasonPhrase;
@@ -46,7 +46,7 @@ namespace HelloRasp
             var deserializedResponse = JsonConvert.DeserializeObject<IPinfo>(responseString);
 
 
-            return deserializedResponse.ip;
+            return deserializedResponse.querry;
 
         }
 
@@ -61,7 +61,7 @@ namespace HelloRasp
             => $"/currentconditions/v1/{locationKey}?";
 
         public static string EndpointGetIpInfo()
-            => "/?callback=callback";
+            => "json";
 
         #endregion
 
