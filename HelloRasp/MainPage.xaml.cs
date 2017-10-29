@@ -32,16 +32,14 @@ namespace HelloRasp
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
 
-            //Textblock1.Text = await Helper.GetLocalKeyAsync(client);
-
             var actualWeather = await Helper.GetActualWeatherAsync(client);
             var ipAddress = await Helper.GetIpInfoAsync(client);
 
             if (actualWeather != null)
             {
-                //TextBlockTime.Text = actualWeather.GetDateTime();
+                TextBlockTime.Text = actualWeather.GetDateTime();
                 TextBlockWeatherText.Text = actualWeather.WeatherText;
-                //TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
+                TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
             }
             else
             {
