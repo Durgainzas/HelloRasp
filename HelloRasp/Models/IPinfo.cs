@@ -8,6 +8,6 @@ namespace HelloRasp.Models
 {
     public class IPinfo
     {
-        public string querry { get; set; }
+        public string query { get; set; }
     }
 }

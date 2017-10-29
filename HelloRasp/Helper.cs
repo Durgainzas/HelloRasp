@@ -46,12 +46,12 @@ namespace HelloRasp
             var deserializedResponse = JsonConvert.DeserializeObject<IPinfo>(responseString);
 
 
-            return deserializedResponse.querry;
+            return deserializedResponse.query;
 
         }
 
         public static async Task<ActualWeather> GetActualWeatherAsync(ApiClient client)
-        {
+       {
             var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetWeatherFromLocationKey(await GetLocalKeyAsync(client)));
             if (response.IsSuccessStatusCode == false)
             {
@@ -59,10 +59,10 @@ namespace HelloRasp
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-            var deserializedResponse = JsonConvert.DeserializeObject<ActualWeather>(responseString);
+            var deserializedResponse = JsonConvert.DeserializeObject<List<ActualWeather>>(responseString);
 
 
-            return deserializedResponse;
+            return deserializedResponse[0];
 
         }
 

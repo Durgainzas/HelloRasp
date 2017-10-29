@@ -39,9 +39,9 @@ namespace HelloRasp
 
             if (actualWeather != null)
             {
-                TextBlockTime.Text = actualWeather.GetDateTime();
+                //TextBlockTime.Text = actualWeather.GetDateTime();
                 TextBlockWeatherText.Text = actualWeather.WeatherText;
-                TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
+                //TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
             }
             else
             {
