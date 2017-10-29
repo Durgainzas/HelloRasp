@@ -37,9 +37,20 @@ namespace HelloRasp
             var actualWeather = await Helper.GetActualWeatherAsync(client);
             var ipAddress = await Helper.GetIpInfoAsync(client);
 
-            TextBlockTemperature.Text = ;
+            if (actualWeather != null)
+            {
+                TextBlockTime.Text = actualWeather.GetDateTime();
+                TextBlockWeatherText.Text = actualWeather.WeatherText;
+                TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
+            }
+            else
+            {
+                TextBlockTime.Text = "Error loading data";
+                TextBlockWeatherText.Text = "Error loading data";
+                TextBlockTemperature.Text = "Error loading data";
+            }
 
-
+            TextBlockIPAddress.Text = ipAddress;
 
         }
     }
