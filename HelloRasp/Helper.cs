@@ -19,9 +19,9 @@ namespace HelloRasp
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task<string> GetLocalKey(ApiClient client)
+        public static async Task<string> GetLocalKeyAsync(ApiClient client)
         {
-            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(await GetIpInfo(client)));
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(await GetIpInfoAsync(client)));
             if (response.IsSuccessStatusCode == false)
             {
                 return response.ReasonPhrase;
@@ -34,7 +34,7 @@ namespace HelloRasp
             return deserializedResponse.Key;
         }
 
-        public static async Task<string> GetIpInfo(ApiClient client)
+        public static async Task<string> GetIpInfoAsync(ApiClient client)
         {
             var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo(), false);
             if (response.IsSuccessStatusCode == false)
@@ -50,7 +50,21 @@ namespace HelloRasp
 
         }
 
+        public static async Task<ActualWeather> GetActualWeatherAsync(ApiClient client)
+        {
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetWeatherFromLocationKey(await GetLocalKeyAsync(client)));
+            if (response.IsSuccessStatusCode == false)
+            {
+                return null;
+            }
 
+            var responseString = await response.Content.ReadAsStringAsync();
+            var deserializedResponse = JsonConvert.DeserializeObject<ActualWeather>(responseString);
+
+
+            return deserializedResponse;
+
+        }
 
         #region endpoints
 

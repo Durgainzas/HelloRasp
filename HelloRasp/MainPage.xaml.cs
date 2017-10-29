@@ -32,7 +32,15 @@ namespace HelloRasp
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
 
-            Textblock1.Text = await Helper.GetLocalKey(client);
+            //Textblock1.Text = await Helper.GetLocalKeyAsync(client);
+
+            var actualWeather = await Helper.GetActualWeatherAsync(client);
+            var ipAddress = await Helper.GetIpInfoAsync(client);
+
+            TextBlockTemperature.Text = ;
+
+
+
         }
     }
 }
