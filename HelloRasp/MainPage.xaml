@@ -28,6 +28,7 @@
         
         <StackPanel Grid.Column="1" Margin="40,0,0,0" VerticalAlignment="Center">
             <TextBlock Name="TextBlockTime" Foreground="White" FontSize="50" Text="Loading..."/>
+            <TextBlock Name="TextBlockLocation" Foreground="White" FontSize="50" Text="Loading..."/>
             <TextBlock Name="TextBlockWeatherText" Foreground="White" FontSize="50" Text="Loading..."/>
             <TextBlock Name="TextBlockTemperature" Foreground="White" FontSize="50" Text="Loading..."/>
         </StackPanel>

@@ -9,5 +9,6 @@ namespace HelloRasp.Models
     public class IPinfo
     {
         public string query { get; set; }
+        public string city { get; set; }
     }
 }

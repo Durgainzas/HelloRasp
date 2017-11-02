@@ -19,34 +19,34 @@ namespace HelloRasp
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task<string> GetLocalKeyAsync(ApiClient client, string ip)
+        public static async Task<Location> GetLocalKeyAsync(ApiClient client, string ip)
         {
             var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(ip));
             if (response.IsSuccessStatusCode == false)
             {
-                return response.ReasonPhrase;
+                return null;
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
             var deserializedResponse = JsonConvert.DeserializeObject<Location>(responseString);
 
 
-            return deserializedResponse.Key;
+            return deserializedResponse;
         }
 
-        public static async Task<string> GetIpInfoAsync(ApiClient client)
+        public static async Task<IPinfo> GetIpInfoAsync(ApiClient client)
         {
             var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo(), false);
             if (response.IsSuccessStatusCode == false)
             {
-                return response.ReasonPhrase;
+                return null;
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
             var deserializedResponse = JsonConvert.DeserializeObject<IPinfo>(responseString);
 
 
-            return deserializedResponse.query;
+            return deserializedResponse;
 
         }
 
