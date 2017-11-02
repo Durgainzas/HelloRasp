@@ -7,6 +7,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using HelloRasp.Models;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -23,37 +24,42 @@ namespace HelloRasp
     public sealed partial class MainPage : Page
     {
         ApiClient client = new ApiClient();
-        string ipAddress = null;
-        string locationKey = null;
+        IPinfo ipInfo = null;
+        Location location = null;
             
         public MainPage()
         {
             this.InitializeComponent();
+            Refresh_Init();
         }
 
-        private async void Refresh_Click(object sender, RoutedEventArgs e)
+        private async void Refresh_Init()
         {
+            string locationKey = "";
+            string ipAddress = "";
+            string city = "";
 
-            if (ipAddress == null)
+            if (ipInfo == null)
             {
-                var ipInfo = await Helper.GetIpInfoAsync(client);
+                ipInfo = await Helper.GetIpInfoAsync(client);
                 ipAddress = ipInfo.query;
+                city = ipInfo.city;
 
             }
 
-            if (locationKey == null)
+            if (location == null)
             {
-                var location = await Helper.GetLocalKeyAsync(client, ipAddress);
+                location = await Helper.GetLocalKeyAsync(client, ipAddress);
                 locationKey = location.Key;
             }
-                
 
-            var actualWeather = await Helper.GetActualWeatherAsync(client, locationKey);
+
+            var actualWeather = await Helper.GetActualWeatherAsync(client, location.Key);
 
             if (actualWeather != null)
             {
                 TextBlockTime.Text = actualWeather.GetDateTime();
-                TextBlockLocation.Text = locationKey;
+                TextBlockLocation.Text = city;
                 TextBlockWeatherText.Text = actualWeather.WeatherText;
                 TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
             }
@@ -66,6 +72,12 @@ namespace HelloRasp
 
             TextBlockIPAddress.Text = ipAddress;
 
+        }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh_Init();
+            TextBlockLocation.Text = "blah";
         }
     }
 }
