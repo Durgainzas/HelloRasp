@@ -24,6 +24,7 @@ namespace HelloRasp
     {
         ApiClient client = new ApiClient();
         string ipAddress = null;
+        string locationKey = null;
             
         public MainPage()
         {
@@ -33,13 +34,13 @@ namespace HelloRasp
         private async void Refresh_Click(object sender, RoutedEventArgs e)
         {
 
-            var actualWeather = await Helper.GetActualWeatherAsync(client);
             if (ipAddress == null)
-            {
                 ipAddress = await Helper.GetIpInfoAsync(client);
-            }
 
-            
+            if (locationKey == null)
+                locationKey = await Helper.GetLocalKeyAsync(client, ipAddress);
+
+            var actualWeather = await Helper.GetActualWeatherAsync(client, locationKey);
 
             if (actualWeather != null)
             {
