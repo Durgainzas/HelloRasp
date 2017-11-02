@@ -19,9 +19,9 @@ namespace HelloRasp
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task<string> GetLocalKeyAsync(ApiClient client)
+        public static async Task<string> GetLocalKeyAsync(ApiClient client, string ip)
         {
-            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(await GetIpInfoAsync(client)));
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(ip));
             if (response.IsSuccessStatusCode == false)
             {
                 return response.ReasonPhrase;
@@ -50,9 +50,9 @@ namespace HelloRasp
 
         }
 
-        public static async Task<ActualWeather> GetActualWeatherAsync(ApiClient client)
+        public static async Task<ActualWeather> GetActualWeatherAsync(ApiClient client, string locationKey)
        {
-            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetWeatherFromLocationKey(await GetLocalKeyAsync(client)));
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetWeatherFromLocationKey(locationKey));
             if (response.IsSuccessStatusCode == false)
             {
                 return null;

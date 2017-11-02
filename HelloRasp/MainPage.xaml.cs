@@ -23,7 +23,8 @@ namespace HelloRasp
     public sealed partial class MainPage : Page
     {
         ApiClient client = new ApiClient();
-
+        string ipAddress = null;
+            
         public MainPage()
         {
             this.InitializeComponent();
@@ -33,7 +34,12 @@ namespace HelloRasp
         {
 
             var actualWeather = await Helper.GetActualWeatherAsync(client);
-            var ipAddress = await Helper.GetIpInfoAsync(client);
+            if (ipAddress == null)
+            {
+                ipAddress = await Helper.GetIpInfoAsync(client);
+            }
+
+            
 
             if (actualWeather != null)
             {
