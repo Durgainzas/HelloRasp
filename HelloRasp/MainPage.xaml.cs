@@ -35,22 +35,15 @@ namespace HelloRasp
 
         private async void Refresh_Init()
         {
-            string locationKey = "";
-            string ipAddress = "";
-            string city = "";
 
             if (ipInfo == null)
             {
                 ipInfo = await Helper.GetIpInfoAsync(client);
-                ipAddress = ipInfo.query;
-                city = ipInfo.city;
-
             }
 
             if (location == null)
             {
-                location = await Helper.GetLocalKeyAsync(client, ipAddress);
-                locationKey = location.Key;
+                location = await Helper.GetLocalKeyAsync(client, ipInfo.query);
             }
 
 
@@ -59,7 +52,7 @@ namespace HelloRasp
             if (actualWeather != null)
             {
                 TextBlockTime.Text = actualWeather.GetDateTime();
-                TextBlockLocation.Text = city;
+                TextBlockLocation.Text = ipInfo.city;
                 TextBlockWeatherText.Text = actualWeather.WeatherText;
                 TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
             }
@@ -70,7 +63,7 @@ namespace HelloRasp
                 TextBlockTemperature.Text = "Error loading data";
             }
 
-            TextBlockIPAddress.Text = ipAddress;
+            TextBlockIPAddress.Text = ipInfo.query;
 
         }
 
