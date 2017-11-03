@@ -46,24 +46,23 @@ namespace HelloRasp
                 location = await Helper.GetLocalKeyAsync(client, ipInfo.query);
             }
 
-
-            var actualWeather = await Helper.GetActualWeatherAsync(client, location.Key);
-
-            if (actualWeather != null)
+            try
             {
+                var actualWeather = await Helper.GetActualWeatherAsync(client, location.Key);
                 TextBlockTime.Text = actualWeather.GetDateTime();
                 TextBlockLocation.Text = ipInfo.city;
                 TextBlockWeatherText.Text = actualWeather.WeatherText;
                 TextBlockTemperature.Text = actualWeather.GetTemperature() + " °C";
+                TextBlockIPAddress.Text = ipInfo.query;
             }
-            else
+            catch (Exception)
             {
                 TextBlockTime.Text = "Error loading data";
                 TextBlockWeatherText.Text = "Error loading data";
                 TextBlockTemperature.Text = "Error loading data";
             }
 
-            TextBlockIPAddress.Text = ipInfo.query;
+
 
         }
 
