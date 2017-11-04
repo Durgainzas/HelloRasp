@@ -17,7 +17,7 @@ namespace HelloRasp
 
         public ApiClient()
         {
-            //_client.BaseAddress = new Uri(baseUri);
+
         }
 
 

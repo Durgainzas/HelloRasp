@@ -100,9 +100,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ActualWeather.cs" />
     <Compile Include="Models\IPinfo.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\Weather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

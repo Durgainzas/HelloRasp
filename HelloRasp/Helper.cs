@@ -12,37 +12,60 @@ namespace HelloRasp
     {
         public const string IP = "78.45.147.145";
         public const string BaseUriAccuWeather = "http://dataservice.accuweather.com";
-        public const string BaseUriIpInfo = "http://ipinfo.io";
+        public const string BaseUriIpInfo = "http://ip-api.com/";
 
         /// <summary>
         /// Get localKey string from server
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        public static async Task<string> GetLocalKey(ApiClient client)
+        public static async Task<Location> GetLocalKeyAsync(ApiClient client, string ip)
         {
-            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(IP));
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(ip));
             if (response.IsSuccessStatusCode == false)
             {
-                return response.ReasonPhrase;
+                return null;
             }
 
             var responseString = await response.Content.ReadAsStringAsync();
-
             var deserializedResponse = JsonConvert.DeserializeObject<Location>(responseString);
 
 
-            return deserializedResponse.Key;
+            return deserializedResponse;
         }
 
-        //public static async Task<string> GetIpInfo(ApiClient client)
-        //{
-        //    var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo());
+        public static async Task<IPinfo> GetIpInfoAsync(ApiClient client)
+        {
+            var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo(), false);
+            if (response.IsSuccessStatusCode == false)
+            {
+                return null;
+            }
 
-        //}
-        
+            var responseString = await response.Content.ReadAsStringAsync();
+            var deserializedResponse = JsonConvert.DeserializeObject<IPinfo>(responseString);
 
-        
+
+            return deserializedResponse;
+
+        }
+
+        public static async Task<ActualWeather> GetActualWeatherAsync(ApiClient client, string locationKey)
+       {
+            var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetWeatherFromLocationKey(locationKey));
+            if (response.IsSuccessStatusCode == false)
+            {
+                return null;
+            }
+
+            var responseString = await response.Content.ReadAsStringAsync();
+            var deserializedResponse = JsonConvert.DeserializeObject<List<ActualWeather>>(responseString);
+
+
+            return deserializedResponse[0];
+
+        }
+
         #region endpoints
 
         public static string EndpointGetLocationByIP(string ip) 
@@ -52,7 +75,7 @@ namespace HelloRasp
             => $"/currentconditions/v1/{locationKey}?";
 
         public static string EndpointGetIpInfo()
-            => "/?callback=callback";
+            => "json";
 
         #endregion
 
