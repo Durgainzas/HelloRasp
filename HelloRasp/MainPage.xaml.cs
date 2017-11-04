@@ -35,19 +35,18 @@ namespace HelloRasp
 
         private async void Refresh_Init()
         {
-
-            if (ipInfo == null)
-            {
-                ipInfo = await Helper.GetIpInfoAsync(client);
-            }
-
-            if (location == null)
-            {
-                location = await Helper.GetLocalKeyAsync(client, ipInfo.query);
-            }
-
             try
             {
+                if (ipInfo == null)
+                {
+                    ipInfo = await Helper.GetIpInfoAsync(client);
+                }
+
+                if (location == null)
+                {
+                    location = await Helper.GetLocalKeyAsync(client, ipInfo.query);
+                }
+
                 var actualWeather = await Helper.GetActualWeatherAsync(client, location.Key);
                 TextBlockTime.Text = actualWeather.GetDateTime();
                 TextBlockLocation.Text = ipInfo.city;
@@ -57,19 +56,22 @@ namespace HelloRasp
             }
             catch (Exception)
             {
-                TextBlockTime.Text = "Error loading data";
-                TextBlockWeatherText.Text = "Error loading data";
-                TextBlockTemperature.Text = "Error loading data";
+                TextBlockTime.Text = "";
+                TextBlockLocation.Text = "";
+                TextBlockWeatherText.Text = "";
+                TextBlockTemperature.Text = "";
+                TextBlockIPAddress.Text = "Error loading data. Please check internet connection or try again later.";
             }
-
-
-
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
+            TextBlockTime.Text = "Loading...";
+            TextBlockLocation.Text = "Loading...";
+            TextBlockWeatherText.Text = "Loading...";
+            TextBlockTemperature.Text = "Loading...";
+            TextBlockIPAddress.Text = "Loading...";
             Refresh_Init();
-            TextBlockLocation.Text = "blah";
         }
     }
 }

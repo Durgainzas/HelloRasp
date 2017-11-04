@@ -22,7 +22,7 @@ namespace HelloRasp
         public static async Task<Location> GetLocalKeyAsync(ApiClient client, string ip)
         {
             var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetLocationByIP(ip));
-            if (response.IsSuccessStatusCode == false)
+            if (response == null || response.IsSuccessStatusCode == false)
             {
                 return null;
             }
@@ -37,7 +37,7 @@ namespace HelloRasp
         public static async Task<IPinfo> GetIpInfoAsync(ApiClient client)
         {
             var response = await client.GetAsync(BaseUriIpInfo, EndpointGetIpInfo(), false);
-            if (response.IsSuccessStatusCode == false)
+            if (response == null || response.IsSuccessStatusCode == false)
             {
                 return null;
             }
@@ -53,7 +53,7 @@ namespace HelloRasp
         public static async Task<ActualWeather> GetActualWeatherAsync(ApiClient client, string locationKey)
        {
             var response = await client.GetAsync(BaseUriAccuWeather, EndpointGetWeatherFromLocationKey(locationKey));
-            if (response.IsSuccessStatusCode == false)
+            if (response == null || response.IsSuccessStatusCode == false)
             {
                 return null;
             }
