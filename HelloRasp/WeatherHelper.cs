@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace HelloRasp
 {
-    public static class Helper
+    public static class WeatherHelper
     {
         public const string IP = "78.45.147.145";
         public const string BaseUriAccuWeather = "http://dataservice.accuweather.com";

@@ -39,15 +39,15 @@ namespace HelloRasp
             {
                 if (ipInfo == null)
                 {
-                    ipInfo = await Helper.GetIpInfoAsync(client);
+                    ipInfo = await WeatherHelper.GetIpInfoAsync(client);
                 }
 
                 if (location == null)
                 {
-                    location = await Helper.GetLocalKeyAsync(client, ipInfo.query);
+                    location = await WeatherHelper.GetLocalKeyAsync(client, ipInfo.query);
                 }
 
-                var actualWeather = await Helper.GetActualWeatherAsync(client, location.Key);
+                var actualWeather = await WeatherHelper.GetActualWeatherAsync(client, location.Key);
                 TextBlockTime.Text = actualWeather.GetDateTime();
                 TextBlockLocation.Text = ipInfo.city;
                 TextBlockWeatherText.Text = actualWeather.WeatherText;
