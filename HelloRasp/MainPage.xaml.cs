@@ -64,7 +64,17 @@ namespace HelloRasp
             }
         }
 
-        private void Refresh_Click(object sender, RoutedEventArgs e)
+        //private void Refresh_Click(object sender, RoutedEventArgs e)
+        //{
+        //    TextBlockTime.Text = "Loading...";
+        //    TextBlockLocation.Text = "Loading...";
+        //    TextBlockWeatherText.Text = "Loading...";
+        //    TextBlockTemperature.Text = "Loading...";
+        //    TextBlockIPAddress.Text = "Loading...";
+        //    Refresh_Init();
+        //}
+
+        private void Refresh_Click(object sender, PointerRoutedEventArgs e)
         {
             TextBlockTime.Text = "Loading...";
             TextBlockLocation.Text = "Loading...";
@@ -72,6 +82,18 @@ namespace HelloRasp
             TextBlockTemperature.Text = "Loading...";
             TextBlockIPAddress.Text = "Loading...";
             Refresh_Init();
+        }
+
+        private void Refresh_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            SymbolIcon icon = sender as SymbolIcon;
+            icon.Foreground = new SolidColorBrush(Windows.UI.Colors.SkyBlue);
+        }
+
+        private void Refresh_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            SymbolIcon icon = sender as SymbolIcon;
+            icon.Foreground = new SolidColorBrush(Windows.UI.Colors.White);
         }
     }
 }
